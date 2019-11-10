@@ -1,0 +1,12 @@
+ToDo list:
+Implement CRUD for list in a similar way: https://www.taniarascia.com/crud-app-in-react-with-hooks/
+Persist it using localStorage
+Test on device.
+Add action to mark habit for each day.
+Add reminder to mark habits.
+Make logic to tell user when a habit is in the green. On the right way.
+Goal setting.
+
+Allow user to create list without logging in. Require login to persist data.
+Add and finish Auth0 connection for account creation
+Add REST API to store and save data
