@@ -1,5 +1,5 @@
 ToDo list:
-Implement CRUD for list in a similar way: https://www.taniarascia.com/crud-app-in-react-with-hooks/
+X Implement CRUD for habits
 Persist it using localStorage
 Test on device.
 Add action to mark habit for each day.
