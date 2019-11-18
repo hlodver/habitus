@@ -18,39 +18,32 @@ import {
     IonTitle,
     IonToolbar
 } from '@ionic/react';
-import { HabitReducer } from 'components/HabitReducer';
 import { addCircleOutline } from 'ionicons/icons';
-
+import React, { useState, useContext } from 'react';
 import { book, build, colorFill, grid } from 'ionicons/icons';
-import React, { useState } from 'react';
+import { AppContext, HABIT_ACTIONS } from 'utils/State';
 import './Home.css';
-import { EditHabit } from 'components/Edit';
+import { EditHabit } from 'components/HabitEditor';
 
 export const Home = (props) => {
     // eslint-disable-next-line
     const [modalInfo, setModalInfo] = useState({ isVisible: false, value: '' });
-    // eslint-disable-next-line
-    let { state, dispatch } = HabitReducer();
-
+    const { state, dispatch } = useContext(AppContext);
     const loggedIn = false;
-    // eslint-disable-next-line
     const addNewEntry = _data => {
-        debugger;
-        dispatch({ type: 'ADD_THING', data: _data });
+        dispatch({ type: HABIT_ACTIONS.ADD_HABIT, data: _data });
     };
 
     const deleteEntry = _index => {
-        dispatch({ type: 'DELETE_THING', index: _index });
+        dispatch({ type: HABIT_ACTIONS.DELETE_HABIT, index: _index });
     };
 
     const editEntry = (_index, _data) => {
-        debugger;
         let payload = { index: _index, data: _data };
-        dispatch({ type: 'EDIT_THING', ...payload });
+        dispatch({ type: HABIT_ACTIONS.EDIT_HABIT, ...payload });
     };
 
     const modalInfoWithEntry = (_entryValue, _index) => {
-        debugger;
         setModalInfo({ isVisible: true, value: _entryValue, index: _index });
     };
     // eslint-disable-next-line
@@ -64,7 +57,6 @@ export const Home = (props) => {
         setModalInfo({ ...modalInfo, isVisible: false, value: '' });
     };
 
-    console.log('state', state);
     return (
         <IonPage>
             <IonHeader>
@@ -84,7 +76,7 @@ export const Home = (props) => {
             <IonContent>
                 <EditHabit initValue={modalInfo} handleFormSubmit={handleFormSubmit} />
 
-                {state.things.map((_thing, _index) => (
+                {state.habits.map((_thing, _index) => (
                     <IonItem key={_index}>
                         <IonLabel className="ion-text-wrap">{_thing}</IonLabel>
                         <IonButton onClick={() => modalInfoWithEntry(_thing, _index)}>
@@ -96,7 +88,7 @@ export const Home = (props) => {
                     </IonItem>
                 ))}
 
-                {!loggedIn && !state.things.length &&
+                {!loggedIn && !state.habits.length &&
                 <IonCard className="welcome-card">
                     <img src="/assets/shapes.svg" alt=""/>
                     <IonCardHeader>

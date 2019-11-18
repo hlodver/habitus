@@ -1,8 +1,11 @@
 import { IonButtons, IonContent, IonHeader, IonIcon, IonItem, IonList, IonMenuButton, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 import { menu } from 'ionicons/icons';
-import React from 'react';
+import React, { useContext } from 'react';
+import { AppContext } from 'utils/State';
 
 export const Stats = () => {
+
+
   return (
     <IonPage>
       <IonHeader>
@@ -10,7 +13,7 @@ export const Stats = () => {
           <IonButtons slot="start">
             <IonMenuButton />
           </IonButtons>
-          <IonTitle>List</IonTitle>
+          <IonTitle>Stats</IonTitle>
         </IonToolbar>
       </IonHeader>
 
@@ -22,13 +25,13 @@ export const Stats = () => {
 };
 
 const ListItems = () => {
-  const items = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(x => {
+  const { state, dispatch } = useContext(AppContext);
+  const items = state.habits.map((h, i) => {
     return (
-      <IonItem key={x}>
+      <IonItem key={i}>
         <IonIcon icon={menu} slot="start" />
-        Item {x}
+        {h}
         <div className="item-note" slot="end">
-          This is item # {x}
         </div>
       </IonItem>
     );
