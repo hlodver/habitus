@@ -37,4 +37,4 @@ const MenuComp = ({ appPages }) => (
   </IonMenu>
 );
 
-export const Menu =  withRouter(MenuComp);
+export const Menu = withRouter(MenuComp);

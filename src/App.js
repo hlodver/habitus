@@ -3,9 +3,9 @@ import { Redirect, Route } from 'react-router-dom';
 import { IonApp, IonRouterOutlet, IonSplitPane } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 
-import { Menu } from './components/Menu';
-import { Home } from './pages/Home';
-import { Stats } from './pages/Stats';
+import { Menu } from 'components/Menu';
+import { Home } from 'pages/Home';
+import { Habits } from 'pages/Habits';
 import { home, list } from 'ionicons/icons';
 import { AppContextProvider } from 'utils/State';
 /* Core CSS required for Ionic components to work properly */
@@ -34,7 +34,7 @@ const appPages = [
         icon: home
     },
     {
-        title: 'Stats',
+        title: 'Habits',
         url: '/home/stats',
         icon: list
     }
@@ -48,7 +48,7 @@ const App = () => (
                     <Menu appPages={appPages}/>
                     <IonRouterOutlet id="main">
                         <Route path="/home" component={Home} exact={true}/>
-                        <Route path="/home/stats" component={Stats} exact={true}/>
+                        <Route path="/home/stats" component={Habits} exact={true}/>
                         <Route path="/" render={() => <Redirect to="/home" exact={true}/>}/>
                     </IonRouterOutlet>
                 </AppContextProvider>
