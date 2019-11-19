@@ -38,7 +38,7 @@ export const Home = (props) => {
 
             {!loggedIn && !state.habits.length &&
             <IonCard className="welcome-card">
-                <img src="/assets/shapes.svg" alt=""/>
+                <img src="/assets/habits.jpg" alt=""/>
                 <IonCardHeader>
                     <IonCardSubtitle>Get Started</IonCardSubtitle>
                     <IonCardTitle>Welcome to Habitus</IonCardTitle>
