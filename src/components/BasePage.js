@@ -21,8 +21,8 @@ export const BasePage = (props) => {
     const handleFormSubmit = (value) => {
         if (value) {
             state.modal.index != null
-            ? dispatch(editHabit({ index: state.modal.index, habit: { label: value } }))
-            : dispatch(addNewHabit({ habit: { label: value }}));
+            ? dispatch(editHabit({ index: state.modal.index, label: value }))
+            : dispatch(addNewHabit({ label: value }));
             dispatch(hideHabitModal());
         }
     };

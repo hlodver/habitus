@@ -31,9 +31,9 @@ export const HabitModal = (props) => {
         <IonModal isOpen={visible}>
             <IonCard>
                 <IonCardHeader>
-                    <IonCardTitle>{isNew ? 'Add' : 'Edit'} a Habit</IonCardTitle>
+                    <IonCardTitle>{isNew ? 'Add' : 'Edit'} a daily Habit</IonCardTitle>
                     <IonCardSubtitle>
-                        What habit would you like to {isNew.value ? 'add' : 'edit'}?
+                        What habit would you like to {isNew ? 'add' : 'edit'}?
                     </IonCardSubtitle>
                 </IonCardHeader>
                 <IonCardContent>

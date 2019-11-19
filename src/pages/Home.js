@@ -9,10 +9,11 @@ import {
     IonLabel
 } from '@ionic/react';
 import React, { useContext } from 'react';
-import { AppContext } from 'utils/State';
+import { AppContext, markHabit, unMarkHabit } from 'utils/State';
 
 import 'pages/Home.css';
 import { BasePage } from 'components/BasePage';
+import { markedToday } from 'utils/dateStuff';
 
 export const Home = (props) => {
     // eslint-disable-next-line
@@ -24,7 +25,14 @@ export const Home = (props) => {
             {state.habits.map((habit, index) => (
                 <IonItem key={index}>
                     <IonLabel className="ion-text-wrap">{habit.label}</IonLabel>
-                    <IonCheckbox/>
+                    <IonCheckbox className="checkHabit" checked={markedToday(habit.marked)} onClick={() => {
+                        if (markedToday(habit.marked)){
+                            dispatch(unMarkHabit({index, habit}))
+                        }
+                        else{
+                            dispatch(markHabit({index, habit}))
+                        }
+                    }}/>
                 </IonItem>
             ))}
 

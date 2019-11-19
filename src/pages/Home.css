@@ -5,3 +5,9 @@
 .title{
   text-align: center;
 }
+
+.checkHabit{
+  --background-checked:black;
+  --checkmark-color: #2de839;
+  --border-color-checked:black
+}

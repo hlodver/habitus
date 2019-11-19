@@ -1,4 +1,5 @@
 import React, { createContext, useReducer, useEffect } from 'react';
+import { equalDates, markedToday } from 'utils/dateStuff';
 
 let AppContext = createContext();
 
@@ -9,11 +10,14 @@ const initialState = {
     errorModal: { visible: false, message: '' }
 };
 const persistedState = JSON.parse(window.localStorage.getItem('persistedState') || '{}');
+//const persistedState = {};
 
 export const HABIT_ACTIONS = {
     ADD_HABIT: 'ADD_HABIT',
     EDIT_HABIT: 'EDIT_HABIT',
     DELETE_HABIT: 'DELETE_HABIT',
+    MARK_HABIT: 'MARK_HABIT',
+    UNMARK_HABIT: 'UNMARK_HABIT',
     SHOW_HABIT_MODAL: 'SHOW_HABIT_MODAL',
     HIDE_HABIT_MODAL: 'HIDE_HABIT_MODAL',
     SHOW_ERROR_MODAL: 'SHOW_ERROR_MODAL',
@@ -47,6 +51,17 @@ export const editHabit = (payload) => ({
     payload
 });
 
+export const markHabit = (payload) => ({
+    type: HABIT_ACTIONS.MARK_HABIT,
+    payload
+});
+
+export const unMarkHabit = (payload) => ({
+    type: HABIT_ACTIONS.UNMARK_HABIT,
+    payload
+});
+
+
 export const showHabitModal = (payload) => ({
     type: HABIT_ACTIONS.SHOW_HABIT_MODAL,
     payload
@@ -67,18 +82,27 @@ export const hideErrorModal = (payload) => ({
     payload
 });
 
+const initHabit = {
+    label: '',
+    marked: []
+};
+
 // The reducer
 let reducer = (state, action) => {
     const { payload, type } = action;
 
     switch (type) {
         case HABIT_ACTIONS.ADD_HABIT: {
-            const { habit } = payload;
+            const { label } = payload;
+            // todo: Check if habit with same label already exists.
             return {
                 ...state,
                 habits: [
                     ...state.habits,
-                    habit
+                    {
+                        ...initHabit,
+                        label: label
+                    }
                 ]
             };
         }
@@ -93,12 +117,51 @@ let reducer = (state, action) => {
             };
         }
         case HABIT_ACTIONS.EDIT_HABIT: {
-            const { habit, index } = payload;
+            const { label, index } = payload;
             return {
                 ...state,
                 habits: [
                     ...state.habits.slice(0, index),
-                    habit,
+                    {
+                        ...state.habits[index],
+                        label: label
+                    },
+                    ...state.habits.slice(index + 1)
+                ]
+            };
+        }
+        case HABIT_ACTIONS.MARK_HABIT: {
+            const { index } = payload;
+            const newHabit = { ...state.habits[index] };
+            if (!markedToday(newHabit.marked)){
+                newHabit.marked = [
+                    ...newHabit.marked,
+                    new Date()
+                ]
+                // Don't add the timestamp. Already there for this day.
+            }
+            return {
+                ...state,
+                habits: [
+                    ...state.habits.slice(0, index),
+                    newHabit,
+                    ...state.habits.slice(index + 1)
+                ]
+            };
+        }
+        case HABIT_ACTIONS.UNMARK_HABIT: {
+            const { index } = payload;
+            const newHabit = { ...state.habits[index] };
+            const d1 = new Date();
+
+            if (markedToday(newHabit.marked)){
+                newHabit.marked = newHabit.marked.filter(d2 => (!equalDates(d1,d2)));
+            }
+            return {
+                ...state,
+                habits: [
+                    ...state.habits.slice(0, index),
+                    newHabit,
                     ...state.habits.slice(index + 1)
                 ]
             };
