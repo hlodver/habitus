@@ -15,3 +15,19 @@ export function countLastXDays(list, x){
     return list.filter(m => (m <= last && m >= first)).length;
 }
 
+export function fixDatesFromState(obj){
+    // Read from local storage and cast marked items to date objecs
+    if (obj){
+        let s = {...obj};
+        if('habits' in obj){
+            obj.habits.forEach(h => {
+               if ('marked' in h){
+                   h.marked = h.marked.map( m => new Date(m));
+               }
+            });
+            return s;
+        }
+    }
+    return {};
+}
+

@@ -1,19 +1,20 @@
 import React, { createContext, useReducer, useEffect } from 'react';
-import { equalDates, markedToday } from 'utils/dateStuff';
-import { getStateFromLocalStorage } from 'utils/stateParser';
-
+import { equalDates, fixDatesFromState, markedToday } from 'utils/dateStuff';
+import { Store } from 'utils/Store';
 let AppContext = createContext();
+const psKey = 'persistedState'
+
 
 // Initial state and the persistest state from local Storage
 const initialState = {
     habits: [],
     modal: { visible: false, index: null },
-    errorModal: { visible: false, message: '' }
+    errorModal: { visible: false, message: '' },
+    initialized: false
 };
-const persistedState = getStateFromLocalStorage();
-//const persistedState = {};
 
 export const HABIT_ACTIONS = {
+    LOAD_PERSISTED: 'LOAD_PERSISTED',
     ADD_HABIT: 'ADD_HABIT',
     EDIT_HABIT: 'EDIT_HABIT',
     DELETE_HABIT: 'DELETE_HABIT',
@@ -37,6 +38,11 @@ const logger = (reducer) => {
 };
 
 // Actions
+export const loadPersisted = (payload) => ({
+    type: HABIT_ACTIONS.LOAD_PERSISTED,
+    payload
+});
+
 export const addNewHabit = (payload) => ({
     type: HABIT_ACTIONS.ADD_HABIT,
     payload
@@ -91,8 +97,15 @@ const initHabit = {
 // The reducer
 let reducer = (state, action) => {
     const { payload, type } = action;
-
     switch (type) {
+        case HABIT_ACTIONS.LOAD_PERSISTED: {
+            let newState = {...payload};
+            newState = fixDatesFromState(newState);
+            return {
+                ...newState,
+                initialized: true
+            };
+        }
         case HABIT_ACTIONS.ADD_HABIT: {
             const { label } = payload;
             // todo: Check if habit with same label already exists.
@@ -212,20 +225,24 @@ let reducer = (state, action) => {
 const loggerReducer = logger(reducer);
 
 function AppContextProvider (props) {
-    const fullInitialState = {
-        ...initialState,
-        ...persistedState
-    };
-
-    let [state, dispatch] = useReducer(loggerReducer, fullInitialState);
+    let [state, dispatch] = useReducer(loggerReducer, initialState);
     let value = { state, dispatch };
+
+    // Runs on mount only
+    useEffect(() => {
+        // Persist any state we want to
+        Store.getItem(psKey).then(data =>{
+            dispatch(loadPersisted(data));
+        }).then();
+    }, []);
+
 
     // Runs every time the state is updated
     useEffect(() => {
-        // Persist any state we want to
-        window.localStorage['persistedState'] = JSON.stringify({
-            ...state
-        });
+        // Make sure it has been initialized by useeffect above
+        if(state.initialized){
+            Store.setItem(psKey, {...state,});
+        }
     }, [state]);
 
     return (
