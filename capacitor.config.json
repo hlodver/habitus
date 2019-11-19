@@ -1,0 +1,14 @@
+{
+  "appId": "io.ionic.starter",
+  "appName": "habitus",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "build",
+  "cordova": {},
+  "linuxAndroidStudioPath": "/usr/local/bin/studio",
+  "plugins": {
+    "SplashScreen": {
+      "showSpinner": true
+    }
+  }
+}

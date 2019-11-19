@@ -2,7 +2,7 @@ import React from 'react';
 import { Redirect, Route } from 'react-router-dom';
 import { IonApp, IonRouterOutlet, IonSplitPane } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-
+import { Plugins } from '@capacitor/core';
 import { Menu } from 'components/Menu';
 import { Home } from 'pages/Home';
 import { Habits } from 'pages/Habits';
@@ -45,6 +45,9 @@ const appPages = [
         icon: list
     }
 ];
+const { SplashScreen } = Plugins;
+SplashScreen.hide();
+
 
 const App = () => (
     <IonApp>

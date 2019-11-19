@@ -1,0 +1,8 @@
+#https://ionicframework.com/docs/react/your-first-app
+
+ionic integrations enable capacitor
+ionic build
+
+
+Icons
+#https://www.joshmorony.com/adding-icons-splash-screens-launch-images-to-capacitor-projects/
