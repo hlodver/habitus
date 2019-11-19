@@ -22,7 +22,6 @@ export const Home = (props) => {
 
     return (
         <BasePage>
-            {state.foobar ? <span>yes</span>:<span>nope</span>}
             {state.habits.map((habit, index) => (
                 <IonItem key={index}>
                     <IonLabel className="ion-text-wrap">{habit.label} x</IonLabel>
@@ -47,7 +46,7 @@ export const Home = (props) => {
                 <IonCardContent>
                     <p>
                         Please get started and add the habits you want to track. You can either click in the top right
-                        corner or select "Habits" from the menu..
+                        corner or select "Habits" from the menu.
                     </p>
                 </IonCardContent>
             </IonCard>}
