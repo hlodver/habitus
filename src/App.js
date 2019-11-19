@@ -6,7 +6,8 @@ import { IonReactRouter } from '@ionic/react-router';
 import { Menu } from 'components/Menu';
 import { Home } from 'pages/Home';
 import { Habits } from 'pages/Habits';
-import { home, list } from 'ionicons/icons';
+import { Stats } from 'pages/Stats';
+import { home, list, stats } from 'ionicons/icons';
 import { AppContextProvider } from 'utils/State';
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -34,8 +35,13 @@ const appPages = [
         icon: home
     },
     {
-        title: 'Habits',
+        title: 'Stats',
         url: '/home/stats',
+        icon: stats
+    },
+    {
+        title: 'Habits',
+        url: '/home/habits',
         icon: list
     }
 ];
@@ -48,7 +54,8 @@ const App = () => (
                     <Menu appPages={appPages}/>
                     <IonRouterOutlet id="main">
                         <Route path="/home" component={Home} exact={true}/>
-                        <Route path="/home/stats" component={Habits} exact={true}/>
+                        <Route path="/home/habits" component={Habits} exact={true}/>
+                        <Route path="/home/stats" component={Stats} exact={true}/>
                         <Route path="/" render={() => <Redirect to="/home" exact={true}/>}/>
                     </IonRouterOutlet>
                 </AppContextProvider>

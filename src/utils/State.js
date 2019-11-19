@@ -1,5 +1,6 @@
 import React, { createContext, useReducer, useEffect } from 'react';
 import { equalDates, markedToday } from 'utils/dateStuff';
+import { getStateFromLocalStorage } from 'utils/stateParser';
 
 let AppContext = createContext();
 
@@ -9,7 +10,7 @@ const initialState = {
     modal: { visible: false, index: null },
     errorModal: { visible: false, message: '' }
 };
-const persistedState = JSON.parse(window.localStorage.getItem('persistedState') || '{}');
+const persistedState = getStateFromLocalStorage();
 //const persistedState = {};
 
 export const HABIT_ACTIONS = {
