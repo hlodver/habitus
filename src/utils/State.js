@@ -10,8 +10,8 @@ const initialState = {
     modal: { visible: false, index: null },
     errorModal: { visible: false, message: '' }
 };
-//const persistedState = getStateFromLocalStorage();
-const persistedState = {};
+const persistedState = getStateFromLocalStorage();
+//const persistedState = {};
 
 export const HABIT_ACTIONS = {
     ADD_HABIT: 'ADD_HABIT',
