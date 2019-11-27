@@ -1,12 +1,12 @@
 ToDo list:
 X Implement CRUD for habits
-Persist it using localStorage
-Test on device.
-Add action to mark habit for each day.
+X Persist it using localStorage
+X Test on device.
+X Add action to mark habit for each day.
 Add reminder to mark habits.
 Make logic to tell user when a habit is in the green. On the right way.
 Goal setting.
 
-Allow user to create list without logging in. Require login to persist data.
+X Allow user to create list without logging in. Require login to persist data.
 Add and finish Auth0 connection for account creation
 Add REST API to store and save data
